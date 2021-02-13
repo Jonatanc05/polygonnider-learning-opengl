@@ -1,0 +1,5 @@
+Application.exe
+compile.bat
+compile_commands.json
+compile_flags.txt
+.cache\
