@@ -36,18 +36,18 @@ void move(GLFWwindow *window, int key, int scancode, int action, int mods) {
 }
 
 int main(void) {
-    GLFWwindow* window;
+	GLFWwindow* window;
 
-    if (!glfwInit())
+	if (!glfwInit())
         return -1;
 
-    window = glfwCreateWindow(640, 480, "Polygonnider", NULL, NULL);
-    if (!window) {
-        glfwTerminate();
-        return -1;
-    }
+	window = glfwCreateWindow(640, 480, "Polygonnider", NULL, NULL);
+	if (!window) {
+		glfwTerminate();
+		return -1;
+	}
 
-    glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(window);
 	if (glewInit() != GLEW_OK)
 		return -1;
 
@@ -57,8 +57,8 @@ int main(void) {
 	xP1 = yP1 = -0.5f;
 	xP2 = yP2 = 0.5f;
 	glfwSetKeyCallback(window, move);
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
+	while (!glfwWindowShouldClose(window)) {
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		xP1 += xV1;
 		yP1 += yV1;
@@ -71,12 +71,11 @@ int main(void) {
 		glVertex2f(0, 0);
 		glEnd();
 
-        glfwSwapBuffers(window);
+		glfwSwapBuffers(window);
 
-        glfwPollEvents();
-    }
+		glfwPollEvents();
+	}
 
-    glfwTerminate();
-    return 0;
+	glfwTerminate();
+	return 0;
 }
-
