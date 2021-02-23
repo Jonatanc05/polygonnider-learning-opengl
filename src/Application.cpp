@@ -130,7 +130,7 @@ int main(void) {
 			xP1, yP1,
 			xP2, yP2,
 			0, 0
-		}; // @TODO don't declare it every frame
+		};
 
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), vertexes, GL_DYNAMIC_DRAW);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
