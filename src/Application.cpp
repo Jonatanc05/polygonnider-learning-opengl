@@ -84,7 +84,7 @@ int main(void) {
 	glUseProgram(program);
 
 	Game* game = Game::getInstance();
-	//glfwSetKeyCallback(window, Game::OnKeyAction);
+	glfwSetKeyCallback(window, Game::OnKeyAction);
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 

@@ -16,7 +16,7 @@ public:
 
 	static Game* getInstance();
 
-	//static void OnKeyAction(GLFWwindow *window, int key, int scancode, int action, int mods);
+	static void OnKeyAction(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 	void update();
 

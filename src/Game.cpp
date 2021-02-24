@@ -13,6 +13,7 @@ Game::Game() {
 	players = (Player**) malloc(DEFAULT_PLAYER_COUNT * sizeof(Player));
 	for (short int i = 0; i < playerCount; i++)
 		players[i] = new Player(0.5f, i * 0.5f);
+	Game::_instance = this;
 };
 
 Game::~Game() {
@@ -20,7 +21,7 @@ Game::~Game() {
 		delete players[i];
 };
 
-/*void Game::OnKeyAction(GLFWwindow *window, int key, int scancode, int action, int mods) {
+void Game::OnKeyAction(GLFWwindow *window, int key, int scancode, int action, int mods) {
 	if (action == GLFW_RELEASE) {
 		switch (key) {
 			case GLFW_KEY_W: _instance->players[0]->yV -=  VELOCITY; break;
@@ -46,7 +47,7 @@ Game::~Game() {
 			default: break;
 		}
 	}
-};*/
+};
 
 void Game::update() {
 	for (short int i = 0; i < playerCount; i++)
