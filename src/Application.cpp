@@ -1,11 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-
-#define VELOCITY 0.001f
-
-float xV1, yV1, xP1, yP1;
-float xV2, yV2, xP2, yP2;
+#include "Game.hpp"
 
 static unsigned int compileShader(unsigned int type, const std::string& source) {
 	unsigned int id = glCreateShader(type);
@@ -42,34 +38,6 @@ static unsigned int createShader(const std::string& vertexShader, const std::str
 	glDeleteShader(fs);
 
 	return program;
-}
-
-void move(GLFWwindow *window, int key, int scancode, int action, int mods) {
-	if (action == GLFW_RELEASE) {
-		switch (key) {
-			case GLFW_KEY_W: yV1 -=  VELOCITY; break;
-			case GLFW_KEY_A: xV1 -= -VELOCITY; break;
-			case GLFW_KEY_S: yV1 -= -VELOCITY; break;
-			case GLFW_KEY_D: xV1 -=  VELOCITY; break;
-			case GLFW_KEY_UP:    yV2 -=  VELOCITY; break;
-			case GLFW_KEY_LEFT:  xV2 -= -VELOCITY; break;
-			case GLFW_KEY_DOWN:  yV2 -= -VELOCITY; break;
-			case GLFW_KEY_RIGHT: xV2 -=  VELOCITY; break;
-			default: break;
-		}
-	} else if (action == GLFW_PRESS) {
-		switch (key) {
-			case GLFW_KEY_W: yV1 +=  VELOCITY; break;
-			case GLFW_KEY_A: xV1 += -VELOCITY; break;
-			case GLFW_KEY_S: yV1 += -VELOCITY; break;
-			case GLFW_KEY_D: xV1 +=  VELOCITY; break;
-			case GLFW_KEY_UP:    yV2 +=  VELOCITY; break;
-			case GLFW_KEY_LEFT:  xV2 += -VELOCITY; break;
-			case GLFW_KEY_DOWN:  yV2 += -VELOCITY; break;
-			case GLFW_KEY_RIGHT: xV2 +=  VELOCITY; break;
-			default: break;
-		}
-	}
 }
 
 int main(void) {
@@ -115,24 +83,16 @@ int main(void) {
 	unsigned int program = createShader(vsSource, fsSource);
 	glUseProgram(program);
 
-	xV1 = yV1 = xV2 = yV2 = 0;
-	xP1 = yP1 = -0.5f;
-	xP2 = yP2 = 0.5f;
-	glfwSetKeyCallback(window, move);
+	Game* game = Game::getInstance();
+	//glfwSetKeyCallback(window, Game::OnKeyAction);
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		xP1 += xV1;
-		yP1 += yV1;
-		xP2 += xV2;
-		yP2 += yV2;
-		float vertexes[] {
-			xP1, yP1,
-			xP2, yP2,
-			0, 0
-		};
+		game->update();
 
-		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), vertexes, GL_DYNAMIC_DRAW);
+		int size;
+		float* vertexes = game->getVertexes(&size);
+		glBufferData(GL_ARRAY_BUFFER, size, vertexes, GL_DYNAMIC_DRAW);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
