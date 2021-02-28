@@ -102,11 +102,6 @@ int main(void) {
 
 	std::string vsSource, fsSource;
 	parseShader("res/shaders/Basic.shader", &vsSource, &fsSource);
-	std::cout << "VERTEX" << std::endl;
-	std::cout << vsSource << std::endl;
-	std::cout << "FRAGMENT" << std::endl;
-	std::cout << fsSource << std::endl;
-
 	unsigned int program = createShader(vsSource, fsSource);
 	glUseProgram(program);
 
