@@ -96,9 +96,19 @@ int main(void) {
 	unsigned int bufferId;
 	glGenBuffers(1, &bufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, bufferId);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void *) 0);
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0,
+		0, 1, 3
+	};
+	unsigned int idxBufferId;
+	glGenBuffers(1, &idxBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxBufferId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 9 * sizeof(unsigned int), indices, GL_DYNAMIC_DRAW);
 
 	std::string vsSource, fsSource;
 	parseShader("res/shaders/Basic.shader", &vsSource, &fsSource);
@@ -115,7 +125,9 @@ int main(void) {
 		int size;
 		float* vertexes = game->getVertexes(&size);
 		glBufferData(GL_ARRAY_BUFFER, size, vertexes, GL_DYNAMIC_DRAW);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, 9 * sizeof(unsigned int), indices, GL_DYNAMIC_DRAW);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, nullptr);
 
 		glfwSwapBuffers(window);
 

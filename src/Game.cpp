@@ -56,14 +56,16 @@ void Game::update() {
 
 // Temp
 float* Game::getVertexes(int* size) {
-	*size = 6 * sizeof(float);
+	*size = 8 * sizeof(float);
 	float *v = (float*) malloc(*size);
 	v[0] = players[0]->xP;
 	v[1] = players[0]->yP;
 	v[2] = players[1]->xP;
 	v[3] = players[1]->yP;
-	v[4] = 0;
-	v[5] = 0;
+	v[4] = -0.5f;
+	v[5] =  0.5f;
+	v[6] =  0.5f;
+	v[7] = -0.5f;
 
 	return v;
 };
