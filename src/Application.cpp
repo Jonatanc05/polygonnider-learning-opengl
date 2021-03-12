@@ -5,7 +5,21 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <signal.h>
 #include "Game.hpp"
+
+#if _DEBUG
+static void APIENTRY debugCallback(GLenum source, GLenum type, unsigned id,
+		GLenum severity, GLsizei length, const char *msg, const void *userParam) {
+	std::cout << "[OPENGL ERROR]: ";
+	for(unsigned i = 0; i < length; i++) {
+		std::cout << msg[i];
+	}
+	std::cout << std::endl;
+	if (type == GL_DEBUG_TYPE_ERROR)
+		raise(SIGABRT);
+}
+#endif
 
 static void parseShader(const std::string& filepath, std::string *out_vss, std::string *out_fss) {
 	std::ifstream stream(filepath);
@@ -81,6 +95,9 @@ int main(void) {
 	if (!glfwInit())
 		return -1;
 
+#if _DEBUG
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
 	window = glfwCreateWindow(640, 480, "Polygonnider", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
@@ -92,6 +109,20 @@ int main(void) {
 		return -1;
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
+#if _DEBUG
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	glDebugMessageCallback(debugCallback, nullptr);
+	unsigned unusedIds = 0;
+	glDebugMessageControl(
+		 // DONT_CARE = don't filter, register me for all events
+		GL_DONT_CARE,
+		GL_DONT_CARE,
+		GL_DONT_CARE,
+		0,
+		&unusedIds,
+		true
+	);
+#endif
 
 	unsigned int bufferId;
 	glGenBuffers(1, &bufferId);
