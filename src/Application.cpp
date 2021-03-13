@@ -106,6 +106,7 @@ int main(void) {
 	}
 
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1);
 	if (glewInit() != GLEW_OK)
 		return -1;
 
@@ -149,7 +150,6 @@ int main(void) {
 
 	int location = glGetUniformLocation(program, "u_color");
 	assert(location != -1);
-	glUniform4f(location, 1, 0.5f, 0.2f, 1);
 
 	Game* game = Game::getInstance();
 	glfwSetKeyCallback(window, Game::OnKeyAction);
@@ -157,12 +157,14 @@ int main(void) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		game->update();
-
 		int size;
 		float* vertexes = game->getVertexes(&size);
+		float* colors = game->getColor();
+
 		glBufferData(GL_ARRAY_BUFFER, size, vertexes, GL_DYNAMIC_DRAW);
 
-		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, 9 * sizeof(unsigned int), indices, GL_DYNAMIC_DRAW);
+		//glUniform4f(location, 1, 0.5f, 0.2f, 1);
+		glUniform4fv(location, 1, colors);
 		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, nullptr);
 
 		glfwSwapBuffers(window);

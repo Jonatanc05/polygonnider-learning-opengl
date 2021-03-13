@@ -54,7 +54,7 @@ void Game::update() {
 		players[i]->update();
 };
 
-// Temp
+// Temporarily works with a fixed length (8)
 float* Game::getVertexes(int* size) {
 	*size = 8 * sizeof(float);
 	float *v = (float*) malloc(*size);
@@ -68,5 +68,16 @@ float* Game::getVertexes(int* size) {
 	v[7] = -0.5f;
 
 	return v;
+};
+
+// Temporarily returns constant color
+float* Game::getColor() {
+	float *color = (float*) malloc(4 * sizeof(float));
+	color[0] = 1;
+	color[1] = 0.5f;
+	color[2] = 0.2f;
+	color[3] = 1;
+
+	return color;
 };
 

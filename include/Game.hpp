@@ -21,6 +21,7 @@ public:
 	void update();
 
 	float* getVertexes(int* size);
+	float* getColor();
 
 
 private:
