@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <signal.h>
+#include <assert.h>
 #include "Game.hpp"
 
 #if _DEBUG
@@ -145,6 +146,10 @@ int main(void) {
 	parseShader("res/shaders/Basic.shader", &vsSource, &fsSource);
 	unsigned int program = createShader(vsSource, fsSource);
 	glUseProgram(program);
+
+	int location = glGetUniformLocation(program, "u_color");
+	assert(location != -1);
+	glUniform4f(location, 1, 0.5f, 0.2f, 1);
 
 	Game* game = Game::getInstance();
 	glfwSetKeyCallback(window, Game::OnKeyAction);
