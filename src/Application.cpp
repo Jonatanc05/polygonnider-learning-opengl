@@ -163,7 +163,6 @@ int main(void) {
 
 		glBufferData(GL_ARRAY_BUFFER, size, vertexes, GL_DYNAMIC_DRAW);
 
-		//glUniform4f(location, 1, 0.5f, 0.2f, 1);
 		glUniform4fv(location, 1, colors);
 		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, nullptr);
 
