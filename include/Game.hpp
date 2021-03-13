@@ -6,7 +6,7 @@
 #include "Player.hpp"
 
 #define DEFAULT_PLAYER_COUNT 2
-#define VELOCITY 0.001f
+#define VELOCITY 0.01f
 
 class Game {
 
